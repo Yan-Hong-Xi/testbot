@@ -1,2 +1,1 @@
-# testbot
-testbotwithpython
+# line_bot_base
