@@ -49,10 +49,27 @@ def callback():
 
 #訊息傳遞區塊
 ##### 基本上程式編輯都在這個function #####
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token,message)
+    # 定义文件消息的 URL
+    file_url = 'https://github.com/Yan-Hong-Xi/testbot/blob/main/test.pdf'
+
+    # 创建按钮模板消息
+    buttons_template = TemplateSendMessage(
+        alt_text='Document',
+        template=ButtonsTemplate(
+            title='Document',
+            text='Click the button below to open the document',
+            actions=[
+                URITemplateAction(
+                    label='Open Document',
+                    uri=file_url
+                )
+            ]
+        )
+    )
 
 #主程式
 import os
