@@ -20,7 +20,10 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
+
+
 app = Flask(__name__)
+
 
 # 必須放上自己的Channel Access Token
 line_bot_api = LineBotApi('rOtH8cmDleBWSPtM0oaXNGt+vunKGgyB15kqiVu2LPcKLcbqOYNdK/zGjc22ME4ZOpWsUEujXswLMCaSTlWFM1oEFHWiwpE+7GRjXqPhdvSA0aca9wLCWAjXTB7RXeAZ+p7uW+pslK9PnxI/d+4enwdB04t89/1O/w1cDnyilFU=')
@@ -53,6 +56,17 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    
+    # 要发送消息的用户 ID
+    user_id = event.source.user_id
+    message_text = event.message.text
+    print(f"Received message from {user_id}: {message_text}")
+
+    # 发送确认消息
+    
+    confirmation_message = TextSendMessage(text="Webhook has been updated.")
+    line_bot_api.reply_message(event.reply_token, confirmation_message)
+    
     # 定义文件消息的 URL
     file_url = 'https://github.com/Yan-Hong-Xi/testbot/blob/main/test.pdf'
 
@@ -71,7 +85,7 @@ def handle_message(event):
         )
     )
     # 发送文件消息
-    line_bot_api.push_message(buttons_template)
+    line_bot_api.reply_message(event.reply_token, buttons_template)
 
 #主程式
 import os
