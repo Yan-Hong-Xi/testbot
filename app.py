@@ -70,6 +70,8 @@ def handle_message(event):
             ]
         )
     )
+    # 发送文件消息
+    line_bot_api.push_message(buttons_template)
 
 #主程式
 import os
